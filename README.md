@@ -22,7 +22,8 @@ source /opt/xilinx/xrt/setup.sh
 
 Inside the Makefile will have different configurations such as run, build, or host. When compiling the kernel a TARGET needs to be set, there are three options sw_emu, hw_emu and hw. sw_emu is software emulation and should be used to quickly verify software correctness (Compiles quickly and runs quickly), cannot be used to verify hardware correctness. hw_emu is hardware emulation, and simulates the hardware implmentation to verifty hardware correctness (compiles quickly but runs slow). hw generates a bitstream that programs the device (compiles very slowly, and runs fast). Using a combination of these different TARGETs, we can debug our design. 
 
-The PLATFORM is the specific device that we are developing for. Generally **/opt/xilinx/platforms/** is the location of all the platforms that are installed on the machine. 
+The PLATFORM is the specific device that we are developing for. Generally **/opt/xilinx/platforms/** is the location of all the platforms that are installed on the machine. We then have to provide the make file a platform file (.xpfm). 
+
 
 ### make run <TARGET> <PLATFORM>
 
@@ -36,6 +37,6 @@ Builds only the kernel program.
 
 Only builds the host program. 
 
-
 ## More Info
 
+The build folder will have a report for the synthesized kernel. There you can see the latency and resource utilization of the kernel. 
