@@ -12,7 +12,7 @@ The Kernel reads from two buffers can be either connected to DDR or HBM, dependi
 
 ## Synthesizing and Compiling
 
-The Makefile can be used to make both the host and kernel program. The host program is compiled with g++ with OpenCL. The kernel uses Vitits (v++) to compile and depending on software emulation, hardware emulation, and hardware the synthesis time will vary. Before you can run make, the Vitis and XRT versions need to be set in **.bashrc**.
+The Makefile can be used to make both the host and kernel program. The host program is compiled with g++ with OpenCL. The kernel uses Vitits (v++) to compile and depending on software emulation, hardware emulation, and hardware the synthesis time will vary. Before you can run make, the Vitis and XRT versions need to be set.
 
 ``
 source /tools/Xilinx/Vitis/20XX.X/settings64.sh
@@ -24,6 +24,14 @@ Inside the Makefile will have different configurations such as run, build, or ho
 
 The PLATFORM is the specific device that we are developing for. Generally **/opt/xilinx/platforms/** is the location of all the platforms that are installed on the machine. We then have to provide the make file a platform file (.xpfm). 
 
+I would recommend adding the following lines to your **.bashrc**
+
+``
+source /tools/Xilinx/Vitis/20XX.X/settings64.sh
+source /opt/xilinx/xrt/setup.sh
+export PLATFORM=/opt/xilinx/platforms/<device>/<device>.xpfm
+``
+You could also export the TARGET but this will change more often. 
 
 ### make run <TARGET> <PLATFORM>
 
@@ -37,6 +45,14 @@ Builds only the kernel program.
 
 Only builds the host program. 
 
-## More Info
+## More Info & Tips
 
 The build folder will have a report for the synthesized kernel. There you can see the latency and resource utilization of the kernel. 
+
+If you're using git, clean the project before commiting the changes also look for hidden folders **.run** and **.ipcache** these folders will get very large and cause issues pushing your repo. 
+
+If you notice a hw compile is taking a long(er) time, try a sw_emu or hw_emu to see if there are any errors. Sometimes when synthezing for hw the software overlooks syntax errors. 
+
+If integrating Verilog/VHDL designs with your HLS design, you can only perform hw_emu and hw runs. 
+
+
