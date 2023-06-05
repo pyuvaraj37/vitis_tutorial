@@ -7,7 +7,7 @@ extern "C" {
         #pragma HLS INTERFACE m_axi port = c bundle = gmem0
 
         for (int i = 0; i < DATA_SIZE; i++) {
-            #pragma HLS UNROLL 
+            #pragma HLS UNROLL //factor=2
             c[i] = a[i] + b[i];
         }
     
