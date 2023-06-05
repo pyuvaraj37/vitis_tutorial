@@ -27,19 +27,21 @@ I would recommend adding the following lines to your **.bashrc**
 
 ``
 source /tools/Xilinx/Vitis/20XX.X/settings64.sh
-
+``
+``
 source /opt/xilinx/xrt/setup.sh
-
+``
+``
 export PLATFORM=/opt/xilinx/platforms/<device>/<device>.xpfm
 ``
 
 You could also export the TARGET but this will change more often. 
 
-### make run TARGET=sw_emu/hw_emu/hw PLATFORM=/opt/xilinx/platforms/<device>/<device>.xpfm
+### make run TARGET=sw_emu/hw_emu/hw PLATFORM=/opt/xilinx/platforms/*device*/*device*.xpfm
 
 It builds both the host and kernel program. 
 
-### make build TARGET=sw_emu/hw_emu/hw PLATFORM=/opt/xilinx/platforms/<device>/<device>.xpfm
+### make build TARGET=sw_emu/hw_emu/hw PLATFORM=/opt/xilinx/platforms/*device*/*device*.xpfm
 
 Builds only the kernel program. 
 
@@ -51,7 +53,7 @@ Only builds the host program.
 The config file **config.cfg** is 1 of 2 ways to control how the Vitis compiler syntheisizes the kernel to hardware. For example the connectivity of the FPGA design can be specified. In this example, we show the vector memory buffers can be instaniated in HBM or DDR. Other configuration options can be found https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-General-Options. There are many options for profiling, debugging, etc. 
 
 ## HLS PRAGMAS 
-The other way to control how the kernel is synthesized to hardware is using HLS PRAGMAS (#pragma), these commands are placed within the kernel HLS code. In this example we use only a 2 different types of pragmas. One is an INTERFACE pragma that specify the a, b, and c ports as AXI master ports. The AXI protocol is a standard and can be read about more https://support.xilinx.com/s/article/1053914?language=en_US. The other pragma used is the UNROLL pragma. A common technique in software is to unroll loops to perform more computation per iteration. Thhe UNROLL pragma acheives something similar, by adding more hardware units to perform the computation in parallel. As you might expect this pragma is limited by loop dependencies. The UNROLL pragma can also take in parameters such as factor which specifies the amount of unrolling to perform. For example some extremely large loops cannot be unrolled fully since there will be a physical resource limitation. Try different unroll factors to see the changes in performance. 
+The other way to control how the kernel is synthesized to hardware is using HLS PRAGMAS (#pragma), these commands are placed within the kernel HLS code. In this example we use only a 2 different types of pragmas. One is an INTERFACE pragma that specify the a, b, and c ports as AXI master ports. The AXI protocol is a standard and can be read about more https://support.xilinx.com/s/article/1053914?language=en_US. The other pragma used is the UNROLL pragma. A common technique in software is to unroll loops to perform more computation per iteration. Thhe UNROLL pragma acheives something similar, by adding more hardware units to perform the computation in parallel. As you might expect this pragma is limited by loop dependencies. The UNROLL pragma can also take in parameters such as factor which specifies the amount of unrolling to perform. For example some extremely large loops cannot be unrolled fully since there will be a physical resource limitation. Try different unroll factors to see the changes in performance. Other HLS pragmas can be found https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/HLS-Pragmas. 
 
 ## More Info & Tips
 
@@ -63,5 +65,5 @@ If you notice a hw compile is taking a long(er) time, try a sw_emu or hw_emu to 
 
 If integrating Verilog/VHDL designs with your HLS design, you can only perform hw_emu and hw runs. 
 
-A powerful tool to use for HW synthesis is TMUX https://www.redhat.com/sysadmin/introduction-tmux-linux. Sometime HW synthesis can take multiple hours, and maintaining a ssh command for an extended period of time can be difficult. So you can use tmux 
+A powerful tool to use for HW synthesis is TMUX https://www.redhat.com/sysadmin/introduction-tmux-linux. Sometimes HW synthesis can take multiple hours, and maintaining a ssh command for an extended period of time can be difficult. So you can use tmux 
 to allow the synthesis continue without an SSH connection. The job can be disowned as well, but TMUX is prefereable as you can reconnect to the tmux session to check the progress easily.  
