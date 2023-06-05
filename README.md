@@ -27,16 +27,19 @@ I would recommend adding the following lines to your **.bashrc**
 
 ``
 source /tools/Xilinx/Vitis/20XX.X/settings64.sh
+
 source /opt/xilinx/xrt/setup.sh
+
 export PLATFORM=/opt/xilinx/platforms/<device>/<device>.xpfm
 ``
+
 You could also export the TARGET but this will change more often. 
 
-### make run <TARGET> <PLATFORM>
+### make run TARGET=sw_emu/hw_emu/hw PLATFORM=/opt/xilinx/platforms/<device>/<device>.xpfm
 
 It builds both the host and kernel program. 
 
-### make build <TARGET> <PLATFORM>
+### make build TARGET=sw_emu/hw_emu/hw PLATFORM=/opt/xilinx/platforms/<device>/<device>.xpfm
 
 Builds only the kernel program. 
 
