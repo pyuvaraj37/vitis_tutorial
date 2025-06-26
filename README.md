@@ -33,7 +33,7 @@ The PLATFORM is the specific device that we are developing for. Generally **/opt
 I would recommend adding the following lines to your **.bashrc**
 
 ```
-source /tools/Xilinx/Vitis/20XX.X/settings64.sh
+source /home/Xilinx/Vitis/2023.2/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 
@@ -77,7 +77,7 @@ We are going to work with the Alveo U50 Data Center Accelerator Card which is in
 
 If you haven't already specified the versions of the tools you are going to be using by executing: 
 ```
-source /tools/Xilinx/Vitis/20XX.X/settings64.sh
+source /home/Xilinx/Vitis/2023.2/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 As mentioned above you can add these to .bashrc to automatically run them on log in. 
@@ -109,19 +109,19 @@ HOST
 ```
 We can confirm the addition is providing the correct results in software by running: 
 ```
-make run TARGET=sw_emu PLATFORM=/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm 
+make run TARGET=sw_emu PLATFORM=/opt/xilinx/platforms/xilinx_u280_gen3x16_xdma_1_202211_1/xilinx_u280_gen3x16_xdma_1_202211_1.xpfm
 ```
 If the the TEST PASSED, we can confirm the values are correct. 
 
 ### Step 2: Hardware Emulation
 To confirm the hardware works properly we can run a hardware emulation with: 
 ```
-make run TARGET=hw_emu PLATFORM=/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm 
+make run TARGET=hw_emu PLATFORM=/opt/xilinx/platforms/xilinx_u280_gen3x16_xdma_1_202211_1/xilinx_u280_gen3x16_xdma_1_202211_1.xpfm
 ```
 This may take longer to compiler and run than the sw_emu. A TEST PASSED should be displayed after running. The hardware emulation provides us with an estimate of the hardware resources used. The System estimate can be found in the build folder. 
 
 ```
-cd _x.hw_emu.xilinx_u250_gen3x16_xdma_4_1_202210_1/reports/link/
+cd _x.hw_emu.xilinx_u280_gen3x16_xdma_1_202211_1/reports/link/
 vim system_estimate_krnl.link.xtxt
 ```
 
@@ -130,14 +130,14 @@ The HLS PRAGMA UNROLL can take a few arguments. The one of interest in this tuto
 ### Step 3: Hardware 
 We have only been emulated the hardware until now. 
 ```
-make run TARGET=hw PLATFORM=/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm 
+make run TARGET=hw PLATFORM=/opt/xilinx/platforms/xilinx_u280_gen3x16_xdma_1_202211_1/xilinx_u280_gen3x16_xdma_1_202211_1.xpfm
 ```
 This command will take a signficantly longer time (Use TMUX if needed). 
 
 Once that completes, look at the system estimate file. Also we can get the final hardware resources used. 
 
 ```
-cd _x.hw.xilinx_u250_gen3x16_xdma_4_1_202210_1/reports/link/imp/
+cd _x.hw.xilinx_u280_gen3x16_xdma_1_202211_1/reports/link/imp/
 vim impl_1_full_util_routed.rpt
 vim impl_1_hw_bb_locked_timing_summary_routed.rpt
 ```
